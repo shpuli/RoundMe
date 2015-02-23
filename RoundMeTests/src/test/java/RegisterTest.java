@@ -41,16 +41,16 @@ public class RegisterTest {
         driver.findElement(By.cssSelector("body > div.rm-modal > div > div.rm-modal-box > div > div.modal-container.join > form > button"))
                 .click();
 
-        Assert.assertEquals(StartUrl + "@" + Login, driver.getCurrentUrl());
-        Assert.assertNotNull(driver.findElement(By.cssSelector("body > header > div > div > div > button")));
+        Assert.assertEquals("Wrong page opened", StartUrl + "@" + Login, driver.getCurrentUrl());
+        Assert.assertNotNull("Not autorized", driver.findElement(By.cssSelector("body > header > div > div > div > button")));
     }
 
     @Test
     public void autorizeTest(){
         tryToLogin(Login, Password);
 
-        Assert.assertEquals(StartUrl + "@" + Login, driver.getCurrentUrl());
-        Assert.assertNotNull(driver.findElement(By.cssSelector("body > header > div > div > div > button")));
+        Assert.assertEquals("Wrong page opened", StartUrl + "@" + Login, driver.getCurrentUrl());
+        Assert.assertNotNull("Not autorized", driver.findElement(By.cssSelector("body > header > div > div > div > button")));
     }
 
     @Test
@@ -72,7 +72,8 @@ public class RegisterTest {
         driver.findElement(By.cssSelector("#scroller > section > div > section.rm-app-settings-password > div > div > div > div.row-btn-container.pass > button"))
                 .click();
 
-        Assert.assertEquals("PASSWORD HAS BEEN CHANGED!",
+        Assert.assertEquals("Wrong text message on password change",
+                "PASSWORD HAS BEEN CHANGED!",
                 driver.findElement(By.cssSelector("div > div > div.ui-pnotify-text")).getText());
 
         action.moveToElement(driver.findElement(By.cssSelector("body > header > div > div > div > a > span.avatar > img")))
@@ -83,15 +84,16 @@ public class RegisterTest {
 
         tryToLogin(Login, Password);
 
-        Assert.assertEquals("INVALID LOGIN OR PASSWORD",
+        Assert.assertEquals("Wrong text message on log in",
+                "INVALID LOGIN OR PASSWORD",
                 driver.findElement(By.cssSelector("div > div > div.ui-pnotify-text")).getText());
 
         driver.navigate().refresh();
 
         tryToLogin(Login, Password + "new");
 
-        Assert.assertEquals(StartUrl + "@" + Login, driver.getCurrentUrl());
-        Assert.assertNotNull(driver.findElement(By.cssSelector("body > header > div > div > div > button")));
+        Assert.assertEquals("Wrong page opened", StartUrl + "@" + Login, driver.getCurrentUrl());
+        Assert.assertNotNull("Not autorized", driver.findElement(By.cssSelector("body > header > div > div > div > button")));
     }
 
     private void tryToLogin(String login, String password){
